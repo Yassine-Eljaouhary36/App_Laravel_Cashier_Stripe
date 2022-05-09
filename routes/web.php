@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/invoices', [ServiceController::class,'invoices'])->name('invoices');
+Route::get('/paymentsHistory', [ServiceController::class,'paymentsHistory'])->name('paymentsHistory');
+Route::get('/invoice/{invoice_id}', [ServiceController::class,'invoice'])->name('invoice');
 Route::resource('service',ServiceController::class);
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -1,12 +1,17 @@
 <x-app-layout>
     <div class="container mx-auto flex justify-center mt-6 ">
-        <div class="columns-2xs">
+        <div class="w-1/3">
             @if ($errors->any())
             <div class="px-4 py-3 bg-red-200 rounded-lg mb-3" style="border: 2px solid rgb(220 38 38)">	
             @foreach ($errors->all() as $error)
                 <strong>-</strong>{{ $error }}<br>
             @endforeach
             </div>
+            @endif
+            @if ($message = Session::get('failed'))
+                <div class="px-4 py-3 bg-red-200 rounded-lg mb-3" style="border: 2px solid rgb(220 38 38)">	
+                <strong>{{ $message }}</strong>
+                </div>
             @endif
             <form action="{{route('service.store')}}" id="form" method="post">
                 @csrf

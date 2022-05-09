@@ -12,11 +12,17 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('service.index')" :active="request()->routeIs('service.index')">
+                        {{ __('Services') }}
                     </x-nav-link>
                     <x-nav-link :href="route('service.create')" :active="request()->routeIs('service.create')">
                         {{ __('Create a service') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('invoices')" :active="request()->routeIs('invoices')">
+                        {{ __('Invoices') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('paymentsHistory')" :active="request()->routeIs('paymentsHistory')">
+                        {{ __('payments History') }}
                     </x-nav-link>
                 </div>
             </div>
