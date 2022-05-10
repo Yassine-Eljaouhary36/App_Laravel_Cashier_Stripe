@@ -58,15 +58,15 @@ class ServiceController extends Controller
             $authed_user->charge(
                 $amount, $request->payment_method
             );
-
-            // $authed_user->invoicePrice('price_tshirt', 5);
-
+            
             $authed_user->services()->create([
                 'title'=>$request->title,
                 'slug'=>Str::slug($request->title),
                 'content'=>$request->title,
                 'premium'=>$request->filled('premium'),
             ]);
+
+            $authed_user->invoicePrice($request->title, 1);
             return redirect()->route('service.index')->with('success','Item created successfully!');
         } catch (Exception $exception) {
             $message = $exception->getMessage();
@@ -117,10 +117,15 @@ class ServiceController extends Controller
     {
         try {
             $user = auth()->user();
+            // $stripe = new \Stripe\StripeClient(
+            //     env('STRIPE_SECRET')
+            // );
+            // $payments = $stripe->balanceTransactions->all();
+
             $stripe = new \Stripe\StripeClient(
                 env('STRIPE_SECRET')
             );
-            $payments = $stripe->balanceTransactions->all();
+            $payments =  $stripe->paymentIntents->all(['customer' => $user->stripe_id]);
             dd($payments);
         } catch (\Exception $ex) {
             return $ex->getMessage();

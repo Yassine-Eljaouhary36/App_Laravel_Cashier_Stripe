@@ -1,31 +1,32 @@
 <x-app-layout>
     <div  class="container mx-auto flex justify-center mt-6 ">
-        <table class="w-1/2" style="border: 2px solid black">
+        <table class="table">
             <thead>
-            <tr>
-                <th style="border: 2px solid black">Date</th>
-                <th style="border: 2px solid black">Amount</th>
-                <th style="border: 2px solid black">Download</th>
-            </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Download</th>
+                </tr>
             </thead>
             <tbody>
-                @foreach ($invoices as $invoice)
-                    <tr>
-                        <td style="border: 2px solid black">{{ $invoice->date()->toFormattedDateString() }}</td>
-                        <td style="border: 2px solid black">{{ $invoice->total() }}</td>
-                        <td style="border: 2px solid black">
-                            <a class="py-2 px-4 bg-pink-300 rounded-lg" href="/invoice/{{ $invoice->id }}">Download</a>
-                        </td>
-                    </tr>
-                @endforeach
+                @forelse ($invoices as $invoice)
                 <tr>
-                    <td class="text-center" style="border: 2px solid black">test gg</td>
-                    <td class="text-center" style="border: 2px solid black">test gg</td>
-                    <td class="text-center" style="border: 2px solid black">
-                        <a class="py-2 px-4 bg-pink-300 rounded-lg" >Download</a>
+                    <th scope="row">{{$index}}</th>
+                    <td>{{ $invoice->date()->toFormattedDateString() }}</td>
+                    <td>{{ $invoice->total() }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="/invoice/{{ $invoice->id }}">Download</a>
                     </td>
                 </tr>
+                @empty
+                <td colspan="5">
+                    <div class="alert alert-primary" role="alert">
+                        <strong>No Invoice Yet</strong>
+                    </div>
+                </td>
+                @endforelse
             </tbody>
-        </table>
+          </table>
     </div>
 </x-app-layout>
